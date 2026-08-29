@@ -64,7 +64,7 @@ setPageData(null);
   };
 
   const response = await fetch(
-    "http://localhost:5000/analyze",
+    "https://code-mentor-c20a.onrender.com/analyze",
     {
       method: "POST",
 
