@@ -7,6 +7,8 @@ const [language, setLanguage] = useState("JavaScript");
 const [isLoading, setIsLoading] = useState(false);
 const [learnStep, setLearnStep] = useState(0);
 
+const [copied, setCopied] = useState(false);
+
 const languages = [
 "JavaScript",
 "Python",
@@ -15,13 +17,19 @@ const languages = [
 "C",
 ];
 
-const copyCode = async (code) => {
-try {
-await navigator.clipboard.writeText(code);
-alert("Code copied!");
-} catch (error) {
-console.error("Copy failed:", error);
-}
+const copyCode = async () => {
+  try {
+    await navigator.clipboard.writeText(pageData.answer);
+
+    setCopied(true);
+
+    setTimeout(() => {
+      setCopied(false);
+    }, 2000);
+
+  } catch (error) {
+    console.error("Copy failed:", error);
+  }
 };
 
 const cleanPageContent = (text) => {
@@ -225,13 +233,12 @@ return (
       </div>
 
       <button
-        className="copy-button"
-        onClick={() =>
-          copyCode(answer?.code)
-        }
-      >
-        📋 Copy
-      </button>
+  className="copy-button"
+  onClick={copyCode}
+  title="Copy code"
+>
+  {copied ? "✓ Copied!" : "📋 Copy"}
+</button>
 
     </div>
 
@@ -424,14 +431,13 @@ return ( <div className="container">
               </span>
             </div>
 
-            <button
-              className="copy-button"
-              onClick={() =>
-                copyCode(pageData.answer)
-              }
-            >
-              📋 Copy
-            </button>
+           <button
+  className="copy-button"
+  onClick={copyCode}
+  title="Copy code"
+>
+  {copied ? "✓ Copied!" : "📋 Copy"}
+</button>
 
           </div>
 
